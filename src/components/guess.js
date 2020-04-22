@@ -11,7 +11,8 @@ const Guess = () => {
   const [colorThree, setColorThree] = useState("");
   const [colorFour, setColorFour] = useState("");
   const [guessComputer, setGuess] = useState([]);
-
+  const [haveColor, setHaveColor] = useState(0);
+  const [notHaveColor, setNotHaveColor] = useState(0);
   const GuessComputer = useCallback(() => {
     const computerArr = ["yellow", "green", "blue", "red"];
     const arrayComb = [];
@@ -25,52 +26,52 @@ const Guess = () => {
   useEffect(() => {
     GuessComputer();
   }, [GuessComputer]);
-  const functGuess = () => {
+  const functGuess = async e => {
     console.log(guessComputer);
     var arr = [];
-    var arrw = [];
     var arrws = [];
     guessComputer.map(sd => arrws.push(sd));
-    // alert(arrws);
     arr.push(colorOne, colorTwo, colorThree, colorFour);
-    arrw.push(colorOne, colorTwo, colorThree, colorFour);
     var sumYes = 0;
     var sumNo = 0;
-    guessComputer.forEach((sd, i) => {
-      arr.forEach((sw, s) => {
-        if (sd === sw && s === i) {
+
+    for (var i = 0; i < arrws.length; i++) {
+      for (var j = 0; j < arr.length; j++) {
+        if (arrws[i] === arr[j] && i === j) {
           sumYes += 1;
-          arrw = arrw.filter(item => item !== sw);
-          arrws = arrws.filter(item => item !== sd);
-          /* 
-          arr.splice(i, 1);
-          arrt.splice(i, 1);*/
+          delete arr[j];
+          delete arrws[i];
+          break;
         }
-      });
+      }
+    }
+    var uniqueArray = arr.filter(function(item, pos) {
+      return arr.indexOf(item) === pos;
     });
-    console.log(arrw);
-    console.log(arrws);
-    /*var uniqueArray = arrw.filter(function(item, pos) {
-      return arrw.indexOf(item) == pos;
-    });
-    arrw = [];
-    arrw = uniqueArray;*/
-    /* var uniqueArray2 = arrws.filter(function(item, pos) {
-      return arrws.indexOf(item) == pos;
+    arr = [];
+    arr = uniqueArray;
+    var uniqueArray2 = arrws.filter(function(item, pos) {
+      return arrws.indexOf(item) === pos;
     });
     arrws = [];
-    arrws = uniqueArray2;*/
-    // console.log(arrw);
-    // console.log(arrws);
-    var intersection = arrws.filter(element => arrw.includes(element));
+    arrws = uniqueArray2;
+    var intersection = arrws.filter(element => arr.includes(element));
     sumNo = intersection;
-    //alert(arAuth);
-    //alert("Imate: " + sumYes + " koji su na pravom mestu");
-    // alert(arrw + "dsdfsdgfgsdgf  " + arrws);
-    console.log("ima" + sumYes + "        nisu" + sumNo.length);
+    console.log(arr);
+    console.log(arrws);
+    console.log(
+      "Imate" +
+        sumYes +
+        " na pravom mestu" +
+        " i " +
+        sumNo.length +
+        " koji nisu na pravom mestu"
+    );
+    setNotHaveColor(sumNo.length);
+    setHaveColor(sumYes);
     arr = [];
-    // uniqueArray = [];
-    arrw = [];
+    uniqueArray = [];
+    uniqueArray2 = [];
     arrws = [];
     sumYes = 0;
     sumNo = 0;
@@ -80,6 +81,7 @@ const Guess = () => {
     <div className="container">
       <div className="row">
         <div className="col align-self-center">
+          {" "}
           <div
             style={{
               backgroundColor: "rgb(0,0,0,0.8)",
@@ -89,6 +91,25 @@ const Guess = () => {
               marginTop: "50px"
             }}
           >
+            {" "}
+            <h3
+              style={{
+                color: "white",
+                textAlign: "left",
+                fontFamily: "Verdana"
+              }}
+            >
+              Right place:{haveColor}
+            </h3>
+            <h3
+              style={{
+                color: "white",
+                textAlign: "left",
+                fontFamily: "Verdana"
+              }}
+            >
+              Wrong place:{notHaveColor}
+            </h3>
             <ColorsGuessRow
               colorOne={colorOne}
               colorTwo={colorTwo}
