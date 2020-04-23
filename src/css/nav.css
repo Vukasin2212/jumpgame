@@ -1,0 +1,18 @@
+.main-link {
+  font-size: 40px;
+  color: black;
+  margin-right: 50px;
+}
+.main-link:hover {
+  text-decoration: none;
+  color: gray;
+}
+.links {
+  font-size: 20px;
+  color: black;
+  margin-right: 30px;
+}
+.links:hover {
+  text-decoration: none;
+  color: gray;
+}

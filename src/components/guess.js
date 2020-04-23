@@ -4,6 +4,7 @@ import ColorTwo from "./colorsguess/colortwo";
 import ColorThree from "./colorsguess/colorthree";
 import ColorFour from "./colorsguess/colorfour";
 import ColorsGuessRow from "./colorguessrow";
+import GuessAll from "./guessall";
 import "../css/main.css";
 const Guess = () => {
   const [colorOne, setColorOne] = useState("");
@@ -13,6 +14,8 @@ const Guess = () => {
   const [guessComputer, setGuess] = useState([]);
   const [haveColor, setHaveColor] = useState(0);
   const [notHaveColor, setNotHaveColor] = useState(0);
+  const [guessUser, setGuessUser] = useState([]);
+  const [countGues, setCountG] = useState(0);
   const GuessComputer = useCallback(() => {
     const computerArr = ["yellow", "green", "blue", "red"];
     const arrayComb = [];
@@ -32,6 +35,9 @@ const Guess = () => {
     var arrws = [];
     guessComputer.map(sd => arrws.push(sd));
     arr.push(colorOne, colorTwo, colorThree, colorFour);
+    var arrUserG = [];
+    var guessuser = [colorOne, colorTwo, colorThree, colorFour];
+
     var sumYes = 0;
     var sumNo = 0;
 
@@ -50,11 +56,11 @@ const Guess = () => {
     });
     arr = [];
     arr = uniqueArray;
-    var uniqueArray2 = arrws.filter(function(item, pos) {
+    /*var uniqueArray2 = arrws.filter(function(item, pos) {
       return arrws.indexOf(item) === pos;
     });
     arrws = [];
-    arrws = uniqueArray2;
+    arrws = uniqueArray2;*/
     var intersection = arrws.filter(element => arr.includes(element));
     sumNo = intersection;
     console.log(arr);
@@ -67,75 +73,105 @@ const Guess = () => {
         sumNo.length +
         " koji nisu na pravom mestu"
     );
+
+    var nw = { guess: guessuser, sumYes: sumYes, sumNo: sumNo.length };
+    arrUserG.push(...guessUser, nw);
+    console.log("pokusajiiiii:  ", arrUserG);
+    setGuessUser(arrUserG);
     setNotHaveColor(sumNo.length);
     setHaveColor(sumYes);
     arr = [];
     uniqueArray = [];
-    uniqueArray2 = [];
+    //uniqueArray2 = [];
     arrws = [];
     sumYes = 0;
     sumNo = 0;
+    setCountG(countGues + 1);
   };
 
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col align-self-center">
-          {" "}
-          <div
+    <div className="row">
+      {" "}
+      <div className="col px-md-5">
+        <div
+          className="col-md-12"
+          style={{
+            backgroundColor: "rgb(0,0,0,0.9)",
+            borderRadius: "10px",
+            padding: "50px",
+            width: "100%",
+            textAlign: "center",
+            marginTop: "50px",
+            minWidth: "510px"
+          }}
+        >
+          <h3
             style={{
-              backgroundColor: "rgb(0,0,0,0.8)",
-              borderRadius: "10px",
-              padding: "50px",
-              width: "510px",
-              marginTop: "50px"
+              color: "white",
+              textAlign: "left",
+              fontFamily: "Verdana"
             }}
           >
-            {" "}
-            <h3
-              style={{
-                color: "white",
-                textAlign: "left",
-                fontFamily: "Verdana"
-              }}
-            >
-              Right place:{haveColor}
-            </h3>
-            <h3
-              style={{
-                color: "white",
-                textAlign: "left",
-                fontFamily: "Verdana"
-              }}
-            >
-              Wrong place:{notHaveColor}
-            </h3>
-            <ColorsGuessRow
-              colorOne={colorOne}
-              colorTwo={colorTwo}
-              colorThree={colorThree}
-              colorFour={colorFour}
-            />
-            <div>
-              <ColorOne setColorOne={setColorOne} />
-              <ColorTwo setColorTwo={setColorTwo} />
-              <ColorThree setColorThree={setColorThree} />
-              <ColorFour setColorFour={setColorFour} />
-            </div>
-            <button
-              className="btn btn-primary"
-              style={{
-                marginTop: "30px",
-                width: "400px",
-                height: "70px"
-              }}
-              onClick={functGuess}
-            >
-              Guess
-            </button>{" "}
+            Right place:{haveColor}
+          </h3>
+          <h3
+            style={{
+              color: "white",
+              textAlign: "left",
+              fontFamily: "Verdana"
+            }}
+          >
+            Wrong place:{notHaveColor}
+          </h3>
+          <ColorsGuessRow
+            colorOne={colorOne}
+            colorTwo={colorTwo}
+            colorThree={colorThree}
+            colorFour={colorFour}
+          />
+          <div>
+            <ColorOne setColorOne={setColorOne} />
+            <ColorTwo setColorTwo={setColorTwo} />
+            <ColorThree setColorThree={setColorThree} />
+            <ColorFour setColorFour={setColorFour} />
           </div>
+          <button
+            className="btn btn-primary"
+            style={{
+              marginTop: "30px",
+              width: "400px",
+              height: "70px"
+            }}
+            onClick={functGuess}
+          >
+            Guess
+          </button>{" "}
         </div>
       </div>
+      <div className="col px-md-5">
+        <div
+          className="col-md-8"
+          style={{
+            backgroundColor: "rgb(0,0,0,0.9)",
+            borderRadius: "10px",
+            padding: "50px",
+            marginTop: "50px",
+            minWidth: "480px"
+          }}
+        >
+          <h1
+            style={{
+              color: "rgb(192,192,192)",
+              textAlign: "left",
+              fontFamily: "Verdana",
+              marginLeft: "15px"
+            }}
+          >
+            Guesses
+          </h1>
+          <GuessAll guessall={guessUser} countGues={countGues} />
+        </div>
+      </div>{" "}
     </div>
   );
 };
