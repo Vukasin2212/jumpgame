@@ -68,3 +68,12 @@
   margin: 5px;
   border: 1px solid gray;
 }
+.ref-h {
+  cursor: pointer;
+  text-align: left;
+  color: white;
+  font-family: Verdana;
+}
+.ref-h:hover {
+  color: grey;
+}

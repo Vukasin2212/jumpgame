@@ -17,13 +17,13 @@ function App() {
         }}
         expand="lg"
       >
-        <Link className="main-link" to="/home">
+        <Link className="main-link" to="/">
           JUMP
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Link className="links" to="/home">
+            <Link className="links" to="/">
               Home
             </Link>
             <Link className="links" to="/aboutgame">
@@ -36,9 +36,19 @@ function App() {
         </Navbar.Collapse>
       </Navbar>
       <Switch>
-        <Route exact path="/home" component={Home} />
+        <Route exact path="/" component={Home} />
         <Route path="/game" component={Game} />
       </Switch>
+      <footer
+        style={{
+          height: "300px",
+          backgroundColor: "#111",
+          padding: "30px",
+          color: "white"
+        }}
+      >
+        cpright Vukasin Milojevic
+      </footer>
     </Router>
   );
 }

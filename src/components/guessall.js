@@ -4,9 +4,9 @@ const GuessAll = ({ guessall, countGues }) => {
   return (
     <div className="col-md-12" style={{ marginTop: "40px" }}>
       <div className="col">
-        {guessall.map(dw => {
+        {guessall.map((dw, d) => {
           return (
-            <div className="row">
+            <div className="row" key={d}>
               {dw.guess
                 ? dw.guess.map((dd, i) => {
                     return (
